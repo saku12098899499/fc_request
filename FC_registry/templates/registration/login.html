@@ -1,0 +1,25 @@
+{% extends '../layout.html' %}
+ 
+{% block content %}
+<h1>Login</h1>
+<section class='common-form'>
+    {% if form.errors %}
+        <p class='error-msg'>ユーザー名とパスワードが一致しません。もう一度入力しなおしてください。</p>
+    {% endif %}
+ 
+    {% if next %}
+        {% if user.is_authenticated %}
+            <p class='error-msg'>このアカウントではアクセスできません。</p>
+        {% else %}
+            <p class='error-msg'>このページにアクセスするためにはログインしてください。</p>
+        {% endif %}
+    {% endif %}
+ 
+    <form action='{% url "login" %}' method='post'>
+        {% csrf_token %}
+        <input type='hidden' name='next' value='{{ next }}'/>
+        {{ form.as_p }}
+        <button type='submit'>ログイン</button>
+    </form>
+</section>
+{% endblock %}
