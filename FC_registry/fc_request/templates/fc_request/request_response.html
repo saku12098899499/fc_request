@@ -1,0 +1,29 @@
+{% extends 'layout.html' %}  <!--layout.htmlが継承するテンプレート(親となるテンプレートがlayout.html)-->
+
+{% block content %}  <!--endblockまで記載した内容が親店プレートに反映される-->
+
+<div class="container col-lg-6 offset-lg-3">
+
+  <!---記事タイトルを表示-->
+  <h2 class="titleline"><span>記事タイトル：{{ post.title }}</span></h2>
+  <hr>
+  <form action="" method="POST" >
+     <!--特定のフィールドに紐づかないエラーを表示する-->
+      {{ form.non_field_errors }}
+
+      <!--フォームの各フィールドを取り出す-->
+      <p>名前：{{ user.get_username }}</p> <!--ログイン中のユーザ名を表示-->
+      <p>レスポンス内容：<br>
+        {{ form.response_cont }}</p>
+      <p>レーティング<br>
+        {{ form.rating }}</p>
+      <br>
+
+      {% csrf_token %}
+      <div class="row my-3">
+          <button type="submit" class="btn btn-success col-3 offset-1">投稿する</button>
+          <a class="btn btn-danger col-3 offset-2" href="{% url 'fc_request:request_detail' post.pk %}">キャンセル</a>
+      </div>
+  </form>
+</div>
+{%  endblock %}
